@@ -1,4 +1,5 @@
 TARGETS = ir-keytable
+UDEVRULESDIR=/usr/lib/udev/rules.d
 
 all: $(TARGETS)
 
@@ -37,8 +38,8 @@ install: $(TARGETS)
 	install -m 644 -p rc_maps.cfg $(DESTDIR)/etc
 	install -m 755 -d $(DESTDIR)/etc/rc_keymaps
 	install -m 644 -p rc_keymaps/* $(DESTDIR)/etc/rc_keymaps
-	install -m 755 -d $(DESTDIR)/lib/udev/rules.d
-	install -m 644 -p 70-infrared.rules $(DESTDIR)/lib/udev/rules.d
+	install -m 755 -d $(DESTDIR)/$(UDEVRULESDIR)
+	install -m 644 -p 70-infrared.rules $(DESTDIR)/$(UDEVRULESDIR)
 	install -m 755 -d $(DESTDIR)$(MANDIR)/man1
 	install -m 644 -p ir-keytable.1 $(DESTDIR)$(MANDIR)/man1
 
