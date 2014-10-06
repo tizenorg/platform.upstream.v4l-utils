@@ -1,0 +1,9 @@
+* Mon Oct 06 2014 Mauro Carvalho Chehab <mchehab@osg.Kernel.org>
+- Updated to upstream version 1.6.0
+
+* Mon May 13 2013 Patrick McCarty <patrick.mccarty@linux.intel.com> 782b3e2
+- Add packaging
+- use openat if available
+- Fix udev rules directory location
+- disable rds compilation
+- (TZPC-3088) Import upstream version 0.9.8, for Tizen SDK support
