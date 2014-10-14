@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name:           v4l-utils
-Version:        0.8.9
+Version:        1.6.0
 Release:        0
 Summary:        Utilities for video4linux and DVB devices
 License:        GPL-2.0+ and GPL-2.0
@@ -22,11 +22,12 @@ Url:            http://linuxtv.org/downloads/v4l-utils/
 Source0:        %{name}-%{version}.tar.bz2
 Source99:       baselibs.conf
 # Only needed to patch broken images in the upstream tarball
+BuildRequires:  gettext-devel
 BuildRequires:  kernel-headers
 BuildRequires:  libjpeg-devel
 BuildRequires:  sysfsutils
 BuildRequires:  udev
-Requires:       libv4l = %{version}
+Requires:       libv4l = %{version}.%{release}
 Requires:       udev
 
 %description
@@ -38,7 +39,7 @@ v4l2-sysfs-path.
 Summary:        Utilities for v4l2 / DVB driver development and debugging
 License:        GPL-2.0+ and GPL-2.0
 Group:          Multimedia/Utilities
-Requires:       libv4l = %{version}
+Requires:       libv4l = %{version}.%{release}
 
 %description devel-tools
 Utilities for v4l2 / DVB driver authors: decode_tm6000, v4l2-compliance and
@@ -60,7 +61,7 @@ consists of 3 different libraries: libv4lconvert, libv4l1 and libv4l2.
 Summary:        Development files for libv4l
 License:        LGPL-2.1+
 Group:          Multimedia/Development
-Requires:       libv4l = %{version}
+Requires:       libv4l = %{version}.%{release}
 
 %description -n libv4l-devel
 The libv4l-devel package contains libraries and header files for
@@ -71,10 +72,11 @@ developing applications that use libv4l.
 
 %build
 export CFLAGS="%{optflags} -fno-strict-aliasing"
-make %{?_smp_mflags}
+%reconfigure
+%__make %{?_smp_mflags}
 
 %install
-make install DESTDIR=%{buildroot} PREFIX=%{_prefix} LIBDIR=%{_libdir}
+%make_install
 
 
 %post -n libv4l -p /sbin/ldconfig
@@ -83,33 +85,34 @@ make install DESTDIR=%{buildroot} PREFIX=%{_prefix} LIBDIR=%{_libdir}
 
 %files
 %license COPYING
-%dir %{_sysconfdir}/rc_keymaps
-%config(noreplace) %{_sysconfdir}/rc_keymaps/*
 %config(noreplace) %{_sysconfdir}/rc_maps.cfg
 %{_bindir}/cx18-ctl
 %{_bindir}/dvb-*
 %{_bindir}/dvbv5-*
 %{_bindir}/ir-keytable
-%{_bindir}/ivtv-ctl
-%{_bindir}/v4l2-ctl
+%{_bindir}/*-ctl
 %{_bindir}/v4l2-sysfs-path
+%{_libdir}/v4l*.so
+%{_prefix}/lib/udev/rc_keymaps/*
 %{_prefix}/lib/udev/rules.d/70-infrared.rules
 %{_mandir}/man1/ir-keytable.1%{ext_man}
 
 %files devel-tools
+%license COPYING
 %{_bindir}/decode_tm6000
 %{_bindir}/v4l2-compliance
 %{_sbindir}/v4l2-dbg
 
 %files -n libv4l
-%doc COPYING.LIB
+%license COPYING.lib*
 %{_libdir}/libv4l/
-%{_libdir}/libv4l1.so.*
-%{_libdir}/libv4l2.so.*
-%{_libdir}/libv4lconvert.so.*
+%{_libdir}/lib*.so.*
 
 %files -n libv4l-devel
+%license COPYING.lib*
 %doc README.lib-multi-threading
 %{_includedir}/libv4l*.h
-%{_libdir}/libv4l*.so
+%{_includedir}/*/*.h
+%{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*.pc
+%{_mandir}/*
