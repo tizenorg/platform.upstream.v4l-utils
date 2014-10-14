@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name:           v4l-utils
-Version:        0.8.9
+Version:        1.6.0
 Release:        0
 Summary:        Utilities for video4linux and DVB devices
 License:        GPL-2.0+ and GPL-2.0
@@ -22,6 +22,7 @@ Url:            http://linuxtv.org/downloads/v4l-utils/
 Source0:        %{name}-%{version}.tar.bz2
 Source99:       baselibs.conf
 # Only needed to patch broken images in the upstream tarball
+BuildRequires:  gettext-devel
 BuildRequires:  kernel-headers
 BuildRequires:  libjpeg-devel
 BuildRequires:  sysfsutils
@@ -68,6 +69,7 @@ developing applications that use libv4l.
 
 %prep
 %setup -q
+%reconfigure
 
 %build
 export CFLAGS="%{optflags} -fno-strict-aliasing"
@@ -83,18 +85,18 @@ make install DESTDIR=%{buildroot} PREFIX=%{_prefix} LIBDIR=%{_libdir}
 
 %files
 %license COPYING
-%dir %{_sysconfdir}/rc_keymaps
-%config(noreplace) %{_sysconfdir}/rc_keymaps/*
 %config(noreplace) %{_sysconfdir}/rc_maps.cfg
 %{_bindir}/cx18-ctl
 %{_bindir}/dvb-*
 %{_bindir}/dvbv5-*
 %{_bindir}/ir-keytable
-%{_bindir}/ivtv-ctl
-%{_bindir}/v4l2-ctl
+%{_bindir}/*-ctl
 %{_bindir}/v4l2-sysfs-path
+%{_libdir}/v4l*.so
+%{_prefix}/lib/udev/rc_keymaps/*
 %{_prefix}/lib/udev/rules.d/70-infrared.rules
 %{_mandir}/man1/ir-keytable.1%{ext_man}
+%exclude %{_libdir}/*.a
 
 %files devel-tools
 %{_bindir}/decode_tm6000
@@ -102,14 +104,15 @@ make install DESTDIR=%{buildroot} PREFIX=%{_prefix} LIBDIR=%{_libdir}
 %{_sbindir}/v4l2-dbg
 
 %files -n libv4l
-%doc COPYING.LIB
+%doc COPYING.*
 %{_libdir}/libv4l/
-%{_libdir}/libv4l1.so.*
-%{_libdir}/libv4l2.so.*
-%{_libdir}/libv4lconvert.so.*
+%{_libdir}/lib*.so.*
+%{_libdir}/lib*.la
 
 %files -n libv4l-devel
 %doc README.lib-multi-threading
 %{_includedir}/libv4l*.h
-%{_libdir}/libv4l*.so
+%{_includedir}/*/*.h
+%{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*.pc
+%{_mandir}/*
