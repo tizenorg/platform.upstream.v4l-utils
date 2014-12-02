@@ -26,7 +26,7 @@ BuildRequires:  gettext-devel
 BuildRequires:  kernel-headers
 BuildRequires:  libjpeg-devel
 BuildRequires:  sysfsutils
-BuildRequires:  udev
+BuildRequires:  systemd-devel
 Requires:       libv4l = %{version}-%{release}
 Requires:       udev
 
