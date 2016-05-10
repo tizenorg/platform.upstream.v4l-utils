@@ -14,9 +14,9 @@
 
 Name:           v4l-utils
 Version:        1.6.0
-Release:        0
+Release:        1
 Summary:        Utilities for video4linux and DVB devices
-License:        GPL-2.0+ and GPL-2.0
+License:        LGPL-2.1+
 Group:          Multimedia/Utilities
 Url:            http://linuxtv.org/downloads/v4l-utils/
 Source0:        %{name}-%{version}.tar.bz2
@@ -34,16 +34,6 @@ Requires:       udev
 v4l-utils is a collection of various video4linux (V4L) and DVB utilities. The
 main v4l-utils package contains cx18-ctl, ir-keytable, ivtv-ctl, v4l2-ctl and
 v4l2-sysfs-path.
-
-%package devel-tools
-Summary:        Utilities for v4l2 / DVB driver development and debugging
-License:        GPL-2.0+ and GPL-2.0
-Group:          Multimedia/Utilities
-Requires:       libv4l = %{version}-%{release}
-
-%description devel-tools
-Utilities for v4l2 / DVB driver authors: decode_tm6000, v4l2-compliance and
-v4l2-dbg.
 
 %package -n libv4l
 Summary:        Collection of video4linux support libraries
@@ -72,7 +62,7 @@ developing applications that use libv4l.
 
 %build
 export CFLAGS="%{optflags} -fno-strict-aliasing"
-%reconfigure
+%reconfigure --disable-v4l-utils --disable-qv4l2 --disable-libdvbv5
 %__make %{?_smp_mflags}
 
 %install
@@ -84,24 +74,25 @@ export CFLAGS="%{optflags} -fno-strict-aliasing"
 %postun -n libv4l -p /sbin/ldconfig
 
 %files
-%license COPYING
-%config(noreplace) %{_sysconfdir}/rc_maps.cfg
-%{_bindir}/cx18-ctl
-%{_bindir}/dvb-*
-%{_bindir}/dvbv5-*
-%{_bindir}/ir-keytable
-%{_bindir}/*-ctl
-%{_bindir}/v4l2-sysfs-path
+#%license COPYING
+%license COPYING.libv4l
+#%config(noreplace) %{_sysconfdir}/rc_maps.cfg
+#%{_bindir}/cx18-ctl
+#%{_bindir}/dvb-*
+#%{_bindir}/dvbv5-*
+#%{_bindir}/ir-keytable
+#%{_bindir}/*-ctl
+#%{_bindir}/v4l2-sysfs-path
 %{_libdir}/v4l*.so
-%{_prefix}/lib/udev/rc_keymaps/*
-%{_prefix}/lib/udev/rules.d/70-infrared.rules
-%{_mandir}/man1/ir-keytable.1%{ext_man}
+#%{_prefix}/lib/udev/rc_keymaps/*
+#%{_prefix}/lib/udev/rules.d/70-infrared.rules
+#%{_mandir}/man1/ir-keytable.1%{ext_man}
 
-%files devel-tools
-%license COPYING
-%{_bindir}/decode_tm6000
-%{_bindir}/v4l2-compliance
-%{_sbindir}/v4l2-dbg
+#%files devel-tools
+#%license COPYING
+#%{_bindir}/decode_tm6000
+#%{_bindir}/v4l2-compliance
+#%{_sbindir}/v4l2-dbg
 
 %files -n libv4l
 %license COPYING.lib*
@@ -112,7 +103,7 @@ export CFLAGS="%{optflags} -fno-strict-aliasing"
 %license COPYING.lib*
 %doc README.lib-multi-threading
 %{_includedir}/libv4l*.h
-%{_includedir}/*/*.h
+#%{_includedir}/*/*.h
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*.pc
-%{_mandir}/*
+#%{_mandir}/*
