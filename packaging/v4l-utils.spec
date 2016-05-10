@@ -14,7 +14,7 @@
 
 Name:           v4l-utils
 Version:        1.6.0
-Release:        1
+Release:        2
 Summary:        Utilities for video4linux and DVB devices
 License:        LGPL-2.1+
 Group:          Multimedia/Utilities
@@ -74,6 +74,7 @@ export CFLAGS="%{optflags} -fno-strict-aliasing"
 %postun -n libv4l -p /sbin/ldconfig
 
 %files
+%manifest %{name}.manifest
 #%license COPYING
 %license COPYING.libv4l
 #%config(noreplace) %{_sysconfdir}/rc_maps.cfg
@@ -95,6 +96,7 @@ export CFLAGS="%{optflags} -fno-strict-aliasing"
 #%{_sbindir}/v4l2-dbg
 
 %files -n libv4l
+%manifest %{name}.manifest
 %license COPYING.lib*
 %{_libdir}/libv4l/
 %{_libdir}/lib*.so.*
