@@ -14,7 +14,7 @@
 
 Name:           v4l-utils
 Version:        1.6.0
-Release:        2
+Release:        3
 Summary:        Utilities for video4linux and DVB devices
 License:        LGPL-2.1+
 Group:          Multimedia/Utilities
@@ -25,8 +25,6 @@ Source99:       baselibs.conf
 BuildRequires:  gettext-devel
 BuildRequires:  kernel-headers
 BuildRequires:  libjpeg-devel
-BuildRequires:  sysfsutils
-BuildRequires:  systemd-devel
 Requires:       libv4l = %{version}-%{release}
 Requires:       udev
 
