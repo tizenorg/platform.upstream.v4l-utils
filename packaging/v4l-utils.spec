@@ -14,7 +14,7 @@
 
 Name:           v4l-utils
 Version:        1.6.0
-Release:        3
+Release:        4
 Summary:        Utilities for video4linux and DVB devices
 License:        LGPL-2.1+
 Group:          Multimedia/Utilities
@@ -35,7 +35,7 @@ v4l2-sysfs-path.
 
 %package -n libv4l
 Summary:        Collection of video4linux support libraries
-License:        LGPL-2.1+ and GPL-2.0
+License:        LGPL-2.1+
 Group:          Multimedia/Libraries
 
 %description -n libv4l
@@ -96,7 +96,8 @@ export CFLAGS="%{optflags} -fno-strict-aliasing"
 %files -n libv4l
 %manifest %{name}.manifest
 %license COPYING.lib*
-%{_libdir}/libv4l/
+%{_libdir}/libv4l/v4l*.so
+%{_libdir}/libv4l/plugins/*.so
 %{_libdir}/lib*.so.*
 
 %files -n libv4l-devel

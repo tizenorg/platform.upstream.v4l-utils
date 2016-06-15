@@ -1,6 +1,6 @@
 if WITH_LIBV4L
 lib_LTLIBRARIES = libv4lconvert.la
-libv4lconvertpriv_PROGRAMS = ov511-decomp ov518-decomp
+#libv4lconvertpriv_PROGRAMS = ov511-decomp ov518-decomp
 include_HEADERS = ../include/libv4lconvert.h
 pkgconfig_DATA = libv4lconvert.pc
 LIBV4LCONVERT_VERSION = -version-info 0
@@ -24,7 +24,7 @@ endif
 libv4lconvert_la_CPPFLAGS = $(CFLAG_VISIBILITY) $(ENFORCE_LIBV4L_STATIC)
 libv4lconvert_la_LDFLAGS = $(LIBV4LCONVERT_VERSION) -lrt -lm $(JPEG_LIBS) $(ENFORCE_LIBV4L_STATIC)
 
-ov511_decomp_SOURCES = ov511-decomp.c
+#ov511_decomp_SOURCES = ov511-decomp.c
 
-ov518_decomp_SOURCES = ov518-decomp.c
+#ov518_decomp_SOURCES = ov518-decomp.c
 
